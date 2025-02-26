@@ -18,8 +18,7 @@ def dfs(graph, start):
         
         if n not in visited:
             visited.append(n)
-            lst.clear()
-            lst.extend(sorted(graph[n]))
+            lst.extendleft(reversed(sorted(graph[n])))
     
     return visited
 
