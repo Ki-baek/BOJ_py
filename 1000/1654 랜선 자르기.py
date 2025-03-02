@@ -29,3 +29,5 @@ def searching(low, high):
 
 searching(1, longest_lan)#ZeroDivisionError, low 초기값 0이 아니라 1
 print(max_lan)
+
+#결국은 처음 생각한게 맞았으니까 자신감있게 밀고 나가고, 진짜 생각이 안날때 도움받기
