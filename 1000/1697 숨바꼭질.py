@@ -24,3 +24,5 @@ limit = 100000
 visited = [0] * (limit + 1)
 
 search()
+
+# 이해는 되는데 구현이 어렵네
