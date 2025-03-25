@@ -1,56 +1,42 @@
+#dfs로 가면 시간 초과가 날 수 밖에 없어.......bfs로
+
 import sys
+from collections import deque
+
 input = sys.stdin.readline
 
-M, N = map(int, input().strip().split())
-judge = 1
+m, n = map(int, input().strip().split())
 
-def ripe(x, y):
-    plus_x = [1, -1, 0, 0]
-    plus_y = [0, 0, 1, -1]
-    global judge
+box = [list(map(int, input().strip().split())) for i in range(n)]
+
+queue = deque()
+
+for a in range(n):
+    for b in range(m):
+        if box[a][b] == 1:
+            queue.append([a, b])
+
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
+
+while queue:
+    x, y = queue.popleft()
 
     for i in range(4):
-        check_x = x + plus_x[i]
-        check_y = y + plus_y[i]
-        
-        if (0 <= check_x < M) and (0 <= check_y < N) and tomato_box[check_y][check_x] == 0:
-            tomato_box[check_y][check_x] = cnt + 1
-            judge = 0
+        nx = x + dx[i]
+        ny = y + dy[i]
 
-tomato_box = []
+        if (0 <= nx < n) and (0 <= ny < m) and box[nx][ny] == 0:
+            box[nx][ny] = box[x][y] + 1
+            queue.append([nx, ny])
 
-for i in range(N):
-    tomato_box.append(list(map(int, input().strip().split())))
+result = 0
 
+for line in box:
+    for tomato in line:
+        if tomato == 0:
+            print(-1)
+            sys.exit()
+    result = max(result, max(line))
 
-cnt = 1
-
-while True:    
-
-    for a in range(M):
-        for b in range(N):
-            if tomato_box[b][a] == cnt:
-                ripe(a, b)
-            
-
-    cnt += 1
-
-    if judge:
-        break
-
-    judge = 1
-
-
-if 0 in (s_num for row in tomato_box for s_num in row):
-    print(-1)
-
-else:
-    print(cnt - 2)
-
-
-# cnt = 1로 놓고 cnt 주위에 0들을 cnt + 1로 바꾸어나가고 
-# 한 사이클이 끝날 때 마다 cnt += 1하고
-# 더이상 바꿀 0이 존재하지 않으면 끝내고
-# 0이 남았는지 검사 ... mustaaaaaaaaaaaaaard 하고 없으면 cnt - 2 출력
-# 있으면 -1 출력 근데 시간제한 2초인데 가능할깜?
-# turn this tv off~ 일단 갈기자
+print(result - 1)
