@@ -4,15 +4,13 @@ input = sys.stdin.readline
 
 def bfs(graph, visited, start):
 
-    global cnt
-    
-
+    count = 1
     dx = [1, -1, 0, 0]
     dy = [0, 0, 1, -1]
 
     queue = deque([start])
 
-    visited[start[0]][start[1]] = cnt
+    visited[start[0]][start[1]] = 1
 
     while queue:
         x, y = queue.popleft()
@@ -21,29 +19,30 @@ def bfs(graph, visited, start):
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if 0 <= nx < n and 0 <= ny < n and visited[nx][ny] == -1 and int(graph[nx][ny]) == 1:
-                visited[nx][ny] = cnt
+            if 0 <= nx < n and 0 <= ny < n and visited[nx][ny] == -1 and graph[nx][ny] == '1':
+                visited[nx][ny] = 0
                 queue.append((nx, ny))
+                count += 1
 
-    cnt += 1            
+    return count            
 
 n = int(input().strip())
 
 
-graph = [[0] * n for i in range(n)]
-cnt = 1
-
+graph = [list(input().strip()) for i in range(n)]
+cnt = 0
+result = []
 visited = [[-1] * n for i in range(n)]
 
 for i in range(n):
-    graph[i] = list(input().strip())
-
-for i in range(n):
     for j in range(n):
-        if int(graph[i][j]) == 1:
+        if graph[i][j] == '1' and visited[i][j] == -1:
+            cnt += 1
             start = (i, j)
-            bfs(graph, visited, start)
+            result.append(bfs(graph, visited, start))
 
-print(cnt - 1)
-for i in range(cnt - 1):
-    print(visited.count(i))
+result.sort()
+
+print(cnt)
+for i in result:
+    print(i)
