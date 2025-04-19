@@ -23,4 +23,4 @@ def bfs(graph, visited, start):
     
     return cnt
 
-m, n, j = map(int, input().strip().split()) #갑자기 뇌정지 h가 들어가면 코드 어캐짜야하지?
+m, n, j = map(int, input().strip().split()) #갑자기 뇌정지 h가 들어가면 3차원 배열 써야하지 않나?
