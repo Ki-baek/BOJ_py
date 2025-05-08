@@ -1,71 +1,41 @@
+# 시간 초과 때문에 pypy3으로 제출해야함(이중 반복문)
+
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 
-N, M, B = map(int, input().strip().split())
+def flat():
+    global height
+    
+    block = B
 
-result = 0
-cnt_h = [0] * 257
-blocks = deque()
-cnt = 0
-adjusted = 0
+    for i in ground:
+        if i <= g:
+            time[g] += g - i
+            block -= g - i
+        
+        else:
+            time[g] += 2 * (i - g)
+            block += i - g
+
+    if block >= 0 and time[g] <= time[height]:
+        height = g
+
+N, M, B = map(int, input().strip().split())
+ground = []
 
 for i in range(N):
-    blocks.extend(list(map(int,input().strip().split())))
+    ground.extend(map(int, input().split()))
 
-for i in blocks:
-    cnt_h[i] += 1
+time = [0] * 257
 
-standard_h = cnt_h.index(max(cnt_h))
+height = 0
 
-for i in range(len(blocks)):
+for g in range(257):
 
-    k = blocks.pop()
+    flat()
+    
+    
+print(time[height], height)
 
-    if k != standard_h:
-        k -= standard_h
-        blocks.appendleft(k)
-    else:
-        cnt += 1
-
-required_b = sum(blocks)
-
-if required_b >= 0:
-
-    n = blocks.pop()
-
-    if n > 0:
-        result += n * 2
-    else:
-        result += n * (-1)
-
-elif -(required_b) > B:
-
-    while -(required_b) >= B:
-
-        B += cnt
-        result += cnt * 2
-        standard_h -= 1
-        adjusted += 1
-
-
-    n = blocks.pop()
-    n += adjusted
-
-    if n > 0:
-        result += n * 2
-    else:
-        result += n * (-1)
-
-else:
-    n = blocks.pop()
-
-    if n > 0:
-        result += n * 2
-    else:
-        result += n * (-1)
-
-print(result, standard_h)
-
-# https://www.acmicpc.net/board/view/138638
+# https://www.acmicpc.net/board/view/138638 반례 모음집
