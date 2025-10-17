@@ -1,20 +1,20 @@
-n = int(input())
+import sys
+input = sys.stdin.readline
 
-people_left = []
+entry_log = dict()
+
+n = int(input().rstrip())
 
 for i in range(n):
-  name, el = input().split()
+  a, b = input().rstrip().split()
   
-  if el == "enter":
-    people_left.append(name)
-  else:
-    people_left.remove(name)
+  if b == 'enter':
+    entry_log[a] = b
     
-people_left.sort()
-people_left.reverse()
+  else:
+    del entry_log[a]
 
-for i in people_left:
+entry_log = sorted(entry_log.keys(), reverse=True)
+
+for i in entry_log:
   print(i)
-  
-  
-  #dict로 해보자 시간초과ㅏㅏㅏ
